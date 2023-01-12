@@ -10,29 +10,28 @@ Note that you need to change the sm version in GPU to suit your device. The defa
 
 0) This source code provides the prediction of LeNet-5 against the MNIST dataset.
 
-    We used a pre-trained model. The pre-trained model and MNIST dataset are in https://github.com/fan-wenjie/LeNet-5
-    We used RLWE-IPFE scheme. It is in https://github.com/josebmera/ringLWE-FE-ref
+    We used a pre-trained model for LeNet-5. It can be found in https://github.com/fan-wenjie/LeNet-5, together with the MNIST dataset.
+    The RLWE-IPFE scheme used in QuripfeNet is https://link.springer.com/chapter/10.1007/978-3-030-97131-1_6, and the accompanied code for this scheme can be found in https://github.com/josebmera/ringLWE-FE-ref
 
-1) The main function calls a data reading, a model loading, and one of two kinds of testing functions.
+1) The main function calls a data reading, a model loading, and either one of the two testing functions.
 
     You can select the functions by parameters in src/params.h
     //#define ORI			//Original LeNet-5 using PlainText
-      #define PLAIN 	//Proposed LeNet-5 using PlainText
+      #define PLAIN 		//Proposed LeNet-5 using PlainText
     //#define CPU			//Proposed LeNet-5 using ChiperText(by IPFE)
     //#define GPU			//Proposed LeNet-5 using ChiperText(by cuFE)(not implemented yet)
 
     testing() is used for the original LeNet-5 using PlainText
     sec_testing() is used for the proposed version including the proposed LeNet-5 using PlainText and the proposed LeNet-5 using ChiperText(by IPFE)
-    * You may also comment out one of the prediction functions for testing.
 
 2) The testing function calls one of the predict functions.
 
     ORI mode: use Predict(lenet, &features, 10). It is the same with the original LeNet-5 library.
-    PLAIN mode: use sec_Predict(lenet, &features, 10). It is used the proposed polynomial convolution layer without encryption. It is used to compare ORI and CPU mode.
-    CPU mode: use sec_Predict(lenet, &features, 10, msk). It is used the proposed QuripfeNet. It include any proposals.
-    * You may also comment out one of the predict functions for testing.
+    PLAIN mode: use sec_Predict(lenet, &features, 10). It uses the proposed polynomial convolution layer without encryption. It is used to compare ORI and CPU mode.
+    CPU mode: use sec_Predict(lenet, &features, 10, msk). It uses the proposed QuripfeNet and includes all the proposed techniques.
+    * You may also comment out one of the prediction functions for testing.
 
-3) Run the following commands to test run the SVM classification protected by cuFE.
+3) Run the following commands to test the CNN classification protected by IPFE.
 
     $ ulimit -s unlimited
 
